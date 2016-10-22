@@ -1,0 +1,5 @@
+{
+  "globalDependencies": {
+    "timelinejs": "registry:dt/timelinejs#0.0.0+20160317120654"
+  }
+}

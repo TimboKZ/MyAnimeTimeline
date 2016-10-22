@@ -77,8 +77,7 @@ gulp.task('watch', ['browserSync', 'sass', 'typescript'], function() {
 
 gulp.task('build', function(callback) {
     runSequence(
-        'clean:dist', 
-        'bower',
+        'clean:dist',
         'typescript',
         'sass',
         ['useref', 'images', 'fonts'],
