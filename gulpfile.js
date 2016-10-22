@@ -1,7 +1,10 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var ts = require('gulp-typescript');
-var tsProject = ts.createProject('app/ts/tsconfig.json');
+var tsProject = ts.createProject('app/ts/tsconfig.json', {
+    typescript: require('typescript'),
+    declaration: true
+});
 var browserSync = require('browser-sync').create();
 var useref = require('gulp-useref');
 var uglify = require('gulp-uglify');
