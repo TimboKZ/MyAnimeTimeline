@@ -10,7 +10,7 @@
  * MAL website address
  * @since 0.0.1
  */
-const MAL_ADDRESS: string = 'https://myanimelist.net/';
+const MAL_ADDRESS: string = 'http://myanimelist.net/';
 
 /**
  * @class A class.
@@ -23,10 +23,10 @@ class MAL {
      * @since 0.0.1
      */
     public static getListData(username: string): string {
-        let request = new XMLHttpRequest();
-        request.open('GET', MAL_ADDRESS + 'animelist/' + username, false);
-        request.send();
-        let content = request.responseBody;
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', MAL_ADDRESS + 'malappinfo.php?u=' + username + '&status=all&type=anime', false);
+        xhr.send();
+        let content = xhr.responseBody;
         return content;
     }
 }
