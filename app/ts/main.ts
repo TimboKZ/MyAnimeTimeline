@@ -1,12 +1,12 @@
 class Greeter {
-    
-    name: string;
-    
+
+    private name: string;
+
     constructor(n: string) {
         this.name = n;
     }
-    
-    greet() {
-        return "Hello " + this.name;
+
+    public greet() {
+        return 'Hello ' + this.name;
     }
 }
