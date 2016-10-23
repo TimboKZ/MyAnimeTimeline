@@ -4,23 +4,26 @@
 <head>
     <title>MyAnimeTimeline: Visualise your anime progress</title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/vis.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
 </head>
 <body>
 
-    <div id="description">
-        <h1>Welcome to <strong>MyAnimeTimeline</strong></h1>
-        <p>MyAnimeTimeline is a simple tool that lets you visualise your anime progress throughout the years.</p>
-        <p>
-            <strong>Note:</strong> Only titles that have "Start Date" and "Finish Date" specified (see picture below) will be displayed.
-            <img src="images/mal-start-finish-date.png">
-        </p>
-    </div>
+    <!--<div id="description">-->
+        <!--<h1>Welcome to <strong>MyAnimeTimeline</strong></h1>-->
+        <!--<p>MyAnimeTimeline is a simple tool that lets you visualise your anime progress throughout the years.</p>-->
+        <!--<p>-->
+            <!--<strong>Note:</strong> Only titles that have "Start Date" and "Finish Date" specified (see picture below) will be displayed.-->
+            <!--<img src="images/mal-start-finish-date.png">-->
+        <!--</p>-->
+    <!--</div>-->
 
-    <div id="test"></div>
+    <div id="visualization"></div>
 
     <!-- build:js js/main.min.js -->
-    <script src="https://vuejs.org/js/vue.min.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/vis.js"></script>
+    <script src="js/Util.js"></script>
     <script src="js/MAL.js"></script>
     <script src="js/main.js"></script>
     <!-- endbuild -->

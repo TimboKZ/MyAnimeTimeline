@@ -3,13 +3,8 @@
  * @author Timur Kuzhagaliyev <tim.kuzh@gmail.com>
  * @copyright 2016
  * @license MIT
- * @version 0.0.1
+ * @version 0.0.2
  */
-/**
- * MAL website address
- * @since 0.0.1
- */
-var MAL_ADDRESS = 'http://myanimelist.net/';
 /**
  * @class A class.
  * @since 0.0.1
@@ -22,14 +17,11 @@ var MAL = (function () {
      * element on the list page of the specified user.
      * @since 0.0.1
      */
-    MAL.getListData = function (username) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', MAL_ADDRESS + 'malappinfo.php?u=' + username + '&status=all&type=anime', false);
-        xhr.send();
-        var content = xhr.responseBody;
-        return content;
+    MAL.getListData = function (username, successHandler, errorHandler) {
+        var url = "https://kuristina.herokuapp.com/anime/" + username + ".json";
+        Util.fetchJSON(url, successHandler, errorHandler);
     };
     return MAL;
 }());
 
-//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIk1BTC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7Ozs7O0dBTUc7QUFFSDs7O0dBR0c7QUFDSCxJQUFNLFdBQVcsR0FBVyx5QkFBeUIsQ0FBQztBQUV0RDs7O0dBR0c7QUFDSDtJQUFBO0lBYUEsQ0FBQztJQVpHOzs7O09BSUc7SUFDVyxlQUFXLEdBQXpCLFVBQTBCLFFBQWdCO1FBQ3RDLElBQUksR0FBRyxHQUFHLElBQUksY0FBYyxFQUFFLENBQUM7UUFDL0IsR0FBRyxDQUFDLElBQUksQ0FBQyxLQUFLLEVBQUUsV0FBVyxHQUFHLG1CQUFtQixHQUFHLFFBQVEsR0FBRyx3QkFBd0IsRUFBRSxLQUFLLENBQUMsQ0FBQztRQUNoRyxHQUFHLENBQUMsSUFBSSxFQUFFLENBQUM7UUFDWCxJQUFJLE9BQU8sR0FBRyxHQUFHLENBQUMsWUFBWSxDQUFDO1FBQy9CLE1BQU0sQ0FBQyxPQUFPLENBQUM7SUFDbkIsQ0FBQztJQUNMLFVBQUM7QUFBRCxDQWJBLEFBYUMsSUFBQSIsImZpbGUiOiJNQUwuanMiLCJzb3VyY2VSb290IjoiL3RzIn0=
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIk1BTC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7Ozs7O0dBTUc7QUE2Q0g7OztHQUdHO0FBQ0g7SUFBQTtJQVlBLENBQUM7SUFYRzs7OztPQUlHO0lBQ1csZUFBVyxHQUF6QixVQUEwQixRQUFnQixFQUNoQixjQUFrRCxFQUNsRCxZQUFzQztRQUM1RCxJQUFJLEdBQUcsR0FBRywyQ0FBeUMsUUFBUSxVQUFPLENBQUM7UUFDbkUsSUFBSSxDQUFDLFNBQVMsQ0FBQyxHQUFHLEVBQUUsY0FBYyxFQUFFLFlBQVksQ0FBQyxDQUFDO0lBQ3RELENBQUM7SUFDTCxVQUFDO0FBQUQsQ0FaQSxBQVlDLElBQUEiLCJmaWxlIjoiTUFMLmpzIiwic291cmNlUm9vdCI6Ii90cyJ9
