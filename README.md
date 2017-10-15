@@ -1,4 +1,6 @@
 # MyAnimeTimeline
+
+[![Join the chat at https://gitter.im/MyAnimeTimeline/Lobby](https://badges.gitter.im/MyAnimeTimeline/Lobby.svg)](https://gitter.im/MyAnimeTimeline/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 A small web app that maps anime from one's MyAnimeList account to a timeline.
 
 # Notes for developers
