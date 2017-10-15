@@ -1,3 +1,5 @@
+///<reference path="MAL.ts"/>
+///<reference path="Util.ts"/>
 /**
  * @file A TypeScript file.
  * @author Timur Kuzhagaliyev <tim.kuzh@gmail.com>
@@ -8,7 +10,7 @@
 
 MAL.getListData(window.location.hash.substr(1), (listData) => {
     console.log(listData);
-    let data = [];
+    let data: any[] = [];
     let animeCount = listData.myanimelist.anime.length;
     for (let i = 0; i < animeCount; i++) {
         let anime = listData.myanimelist.anime[i];
@@ -54,6 +56,7 @@ MAL.getListData(window.location.hash.substr(1), (listData) => {
         align: 'left',
         zoomMax: 31536000000 * 20,
         zoomMin: 86400000 * 10,
+        type: 'point',
     };
 
     // Create a Timeline
