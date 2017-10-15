@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>MyAnimeTimeline: Visualise your anime progress</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/vis.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+</head>
+<body>
+
+<div class="controls">
+    <a href="#" class="controls-toggle">Controls <span>(toggle)</span></a>
+    <div class="controls-body">
+        <p>Welcome to <strong>MyAnimeTimeline</strong>! This tool lets you visualises your MAL anime and manga progress
+            throughout the
+            years. </p>
+        <p>Links: <a href="https://foxypanda.me/my-anime-timeline-and-kuristina/" target="_blank">Relevant article</a>,
+            <a href="https://github.com/TimboKZ/MyAnimeTimeline" target="_blank">GitHub</a>.</p>
+        <form>
+            <div class="username-input">
+                <label for="username">Enter your username:</label>
+                <input type="text" id="username" name="username" required placeholder="e.g. Timbo_KZ"/>
+            </div>
+
+            <div class="radio-column-wrapper">
+                <div class="radio-column">
+                    <div class="column-title">List type:</div>
+                    <input type="radio" checked id="radio-anime" name="list_type" value="anime"/>
+                    <label for="radio-anime">Anime list</label>
+                    <input type="radio" id="radio-manga" name="list_type" value="manga"/>
+                    <label for="radio-manga">Manga list</label>
+                </div>
+            </div><!--
+         --><div class="radio-column-wrapper">
+                <div class="radio-column">
+                    <div class="column-title">Display type:</div>
+                    <input type="radio" checked id="radio-point" name="display_type" value="point"/>
+                    <label for="radio-point" for="radio-point">Point</label>
+                    <input type="radio" id="radio-box" name="display_type" value="box"/>
+                    <label for="radio-box" for="radio-box">Box</label>
+                    <input type="radio" id="radio-range" name="display_type" value="range"/>
+                    <label for="radio-range">Range (duration)</label>
+                </div>
+            </div>
+
+            <input class="go" type="submit" value="Go!">
+        </form>
+    </div>
+</div>
+
+<div id="visualization">
+    <div class="vis-status">Enter a MAL username!</div>
+</div>
+
+<script src="js/moment.js"></script>
+<script src="js/vis.js"></script>
+<script src="js/superagent.js"></script>
+<script src="js/jquery-3.2.1.slim.js"></script>
+<script src="js/scripts.js"></script>
+</body>
+</html>
