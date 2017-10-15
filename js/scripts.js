@@ -14,7 +14,8 @@ var readQueryString = function () {
     return {
         username: getQueryStringField('username'),
         listType: getQueryStringField('list_type'),
-        displayType: getQueryStringField('display_type')
+        displayType: getQueryStringField('display_type'),
+        cap: parseInt(getQueryStringField('cap'))
     };
 };
 
@@ -89,6 +90,7 @@ var displayTimeline = function (listItems, displayType) {
                 start = temp;
             }
             if (start.toUTCString() === end.toUTCString()) {
+                if (isNaN(start.getTime())) start = new Date();
                 end = moment(start).add(1, 'day').toDate();
             }
         }
@@ -114,6 +116,7 @@ $(document).ready(function () {
     try {
         $('#radio-' + config.listType).prop('checked', true);
         $('#radio-' + config.displayType).prop('checked', true);
+        $('#checkbox-cap').prop('checked', !!config.cap);
     } catch (error) {
         return displayError(error);
     }
@@ -127,6 +130,9 @@ $(document).ready(function () {
                 listItems = response.body.myanimelist.manga;
             } else {
                 listItems = response.body.myanimelist.anime;
+            }
+            if (!!config.cap) {
+                listItems = listItems.slice(0, config.cap);
             }
             displayTimeline(listItems, config.displayType);
         } catch (error) {

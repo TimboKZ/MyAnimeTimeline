@@ -97,6 +97,13 @@ p {
     height: 30px;
 }
 
+.radio-column hr {
+    background-color: #f0f0f0;
+    margin: 5px -5px 5px;
+    border: none;
+    height: 1px;
+}
+
 #visualization {
     position: absolute;
     height: 100%;
