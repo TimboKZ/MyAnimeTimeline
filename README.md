@@ -4,7 +4,7 @@
 
 A small web app that maps titles from a MyAnimeList account to a timeline. 
 
-Available at [https://hosting.kawaiidesu.me/my-anime-timeline/](https://hosting.kawaiidesu.me/my-anime-timeline/).
+Available at [https://hosting.kawaiidesu.me/MyAnimeTimeline/](https://hosting.kawaiidesu.me/MyAnimeTimeline/).
 
 Tools used:
 
