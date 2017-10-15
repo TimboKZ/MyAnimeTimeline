@@ -100,6 +100,7 @@ var displayTimeline = function (listItems, displayType) {
 };
 
 $(document).ready(function () {
+    usernameInput.focus();
     controlsToggle.click(function (event) {
         event.preventDefault();
         controlsBody.toggle();
