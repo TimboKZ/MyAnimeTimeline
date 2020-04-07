@@ -5,7 +5,7 @@
  */
 import moment from 'moment';
 
-import {formatDate} from './Utils'
+import {formatDate} from './Utils';
 import {EntryStatus, ListEntry} from './MalApi';
 
 export enum DisplayType {
@@ -54,7 +54,7 @@ export const prepareVisJsDataset = (listEntries: ListEntry[]): VisJsDataset => {
         };
         dataset.push(record);
     }
-    return dataset;
+    return dataset.sort((a, b) => b.end.localeCompare(a.end));
 };
 
 export const drawVisJsTimeline = (dataset: VisJsDataset, displayType: DisplayType) => {
@@ -67,5 +67,5 @@ export const drawVisJsTimeline = (dataset: VisJsDataset, displayType: DisplayTyp
         zoomMin: 86400000 * 10,
         type: displayType,
     };
-    const timeline = new vis.Timeline(container, items, options);
+    new vis.Timeline(container, items, options);
 };

@@ -15,7 +15,7 @@ export const getConfigFromUrlParameters = () => {
     return {
         username: getUrlParameter('username'),
         listType: getUrlParameter('list_type'),
-        cap: Number(getUrlParameter('cap')),
+        cap: Math.round(Number(getUrlParameter('cap'))),
         displayType: getUrlParameter('display_type'),
     } as const;
 };

@@ -7,6 +7,7 @@ import json
 import boto3
 import logging
 import dateutil.parser
+from typing import Union
 from datetime import datetime
 from botocore.vendored import requests
 
@@ -16,42 +17,47 @@ MAL_API_BASE_URL = 'https://api.myanimelist.net/v2'
 
 USERNAME_ILLEGAL_CHARACTER_REGEX = re.compile("[^A-Za-z0-9\-\_]+")
 
+logging.getLogger().setLevel(logging.DEBUG)
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s [%(levelname)s] %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
 
+def prepare_response(status_code: int, payload: Union[dict, str]) -> dict:
+    body = payload if not isinstance(payload, dict) else {'message': payload}
+
+    return {
+        'statusCode': status_code,
+        'headers': {
+            'Access-Control-Allow-Origin': '*',
+        },
+        'body': body,
+    }
+
+
 def lambda_handler(event, context):
-    username = event.get('username')
-    list_type = event.get('list_type')
+    data_source = event.get('queryStringParameters', event)
+    username = data_source.get('username')
+    list_type = data_source.get('list_type')
 
     logging.info(f'Got request: {event}')
 
     try:
         list_entries = get_list_entries(username, list_type)
-
-        return {
-            'statusCode': 200,
-            'body': json.dumps({'list_entries': list_entries})
-        }
+        return prepare_response(200, json.dumps({'list_entries': list_entries}))
 
     except ValueError as e:
-        logging.exception(f'Bad Request: {e}')
-        return {
-            'statusCode': 400,
-            'body': f'Bad Request: {e}'
-        }
-    except RuntimeError as e:
-        logging.exception(f'Server Error: {e}')
-        return {
-            'statusCode': 500,
-            'body': f'Server Error: {e}'
-        }
-    except Exception as e:
-        logging.exception(f'Unknown Error: {e}')
-        return {
-            'statusCode': 500,
-            'body': f'Unknown Error: {e}'
-        }
+        error_message = f'Bad Error: {e}'
+        logging.exception(error_message)
+        return prepare_response(400, error_message)
 
+    except RuntimeError as e:
+        error_message = f'Server Error: {e}'
+        logging.exception(error_message)
+        return prepare_response(500, error_message)
+
+    except Exception as e:
+        error_message = f'Unknown Error:: {e}'
+        logging.exception(error_message)
+        return prepare_response(500, error_message)
 
 
 def get_list_entries(username: str, list_type: str) -> list:
@@ -79,21 +85,31 @@ def fetch_mal_api_entries(access_token: str, username: str, list_type: str) -> l
     }
     fields = 'list_status{start_date,finish_date}'
     limit = 1000
-    request_url = f'{MAL_API_BASE_URL}/users/{username}/animelist?fields={fields}&limit={limit}'
-    logging.debug(f'List request URL: {request_url}')
-    response = requests.get(request_url, headers=headers)
-    if response.status_code == 200:
-        logging.debug(f'Got 200 response from MAL API: {response.text}')
-    elif response.status_code == 404:
-        logging.warning(f'User {username} was not found!')
-        raise ValueError(f'User {username} was not found!')
-    else:
-        logging.error(f'MAL API returned status code {response.status_code} when trying to get list, with text: {response.text}')
-        raise RuntimeError(f'MAL API returned code {response.status_code}.')
+    initial_request_url = f'{MAL_API_BASE_URL}/users/{username}/animelist?fields={fields}&limit={limit}'
 
+    list_entries = []
 
-    data = json.loads(response.text)
-    return data['data']
+    page_index = -1
+    page_url = initial_request_url
+    while page_index < 5 and page_url:
+        page_index += 1
+
+        logging.debug(f'List request URL for page {page_index + 1}: {page_url}')
+        response = requests.get(page_url, headers=headers)
+        if response.status_code == 200:
+            logging.debug(f'Got 200 response from MAL API: {response.text}')
+            data = json.loads(response.text)
+            list_entries += data['data']
+            page_url = data.get('paging', {}).get('next')
+
+        elif response.status_code == 404:
+            logging.warning(f'User {username} was not found!')
+            raise ValueError(f'User {username} was not found!')
+        else:
+            logging.error(f'MAL API returned status code {response.status_code} when trying to get page {page_index + 1} of the list, with text: {response.text}')
+            raise RuntimeError(f'MAL API returned code {response.status_code} when trying to get page {page_index + 1} of the list.')
+
+    return list_entries
 
 
 def generate_access_token():
@@ -150,4 +166,3 @@ def generate_access_token():
         logging.info('Successfully cached access token.')
 
     return access_token
-

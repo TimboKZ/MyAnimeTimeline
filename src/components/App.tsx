@@ -29,10 +29,14 @@ function App() {
             return;
         }
 
+        setVisualisationStatus(`Loading ${username}'s ${listType} list...`);
         getMalListEntries(username, listType as ListType)
             .then(listEntries => {
                 const dataset = prepareVisJsDataset(listEntries);
-                drawVisJsTimeline(dataset, displayType as DisplayType);
+                const dataset_subset = cap > 0 ? dataset.slice(0, cap) : dataset;
+                console.log(`Showing ${dataset_subset.length} out of ${dataset.length} entries.`)
+
+                drawVisJsTimeline(dataset_subset, displayType as DisplayType);
                 setVisualisationStatus('');
             })
             .catch(error => setVisualisationStatus(`Error: ${error.message}`));
