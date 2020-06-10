@@ -161,7 +161,14 @@ def generate_access_token():
             'expires_in_seconds': expires_in_seconds,
             'retrieval_date': retrieval_date.isoformat(),
         }
-        dynamodb.update_item(TableName='my-anime-timeline', Key=record_key, AttributeUpdates={'json': {'S': json.dumps(data)}})
+        attr_update_dict = {
+            'json': {
+                'Value': {
+                    'S': json.dumps(data),
+                },
+            },
+        }
+        dynamodb.update_item(TableName='my-anime-timeline', Key=record_key, AttributeUpdates=attr_update_dict)
 
         logging.info('Successfully cached access token.')
 
