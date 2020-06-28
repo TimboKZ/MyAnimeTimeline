@@ -85,7 +85,7 @@ def fetch_mal_api_entries(access_token: str, username: str, list_type: str) -> l
     }
     fields = 'list_status{start_date,finish_date}'
     limit = 1000
-    initial_request_url = f'{MAL_API_BASE_URL}/users/{username}/animelist?fields={fields}&limit={limit}'
+    initial_request_url = f'{MAL_API_BASE_URL}/users/{username}/{list_type}list?fields={fields}&limit={limit}'
 
     list_entries = []
 
